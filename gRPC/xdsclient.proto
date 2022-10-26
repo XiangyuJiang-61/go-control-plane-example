@@ -1,0 +1,30 @@
+syntax = "proto3";
+// 定义包名
+option go_package = "/;xdsclient";
+//package test;
+// 可以定义多个服务，每个服务内可以定义多个接口
+service XDSConfig {
+  // 定义接口 (结构体可以复用)
+  // 方法 (请求消息结构体) returns (返回消息结构体) {}
+  rpc SetConfigToCache (Require) returns (Response) {}
+}
+
+// 定义 Req 消息结构
+message Require {
+  // 类型 字段 = 标识号
+  string clusterName = 1;
+  string upstreamHost = 2;
+  uint32 upstreamPort = 3;
+  string routeName = 4;
+  repeated string domains = 5;
+  string prefix = 6;
+  string listenerName = 7;
+  uint32 listenerPort = 8;
+  string grpcClusterName = 9;
+}
+
+// 定义 Res 消息结构
+message Response {
+  string response = 1;
+  int32 code = 2;
+}
