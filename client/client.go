@@ -22,8 +22,8 @@ func main() {
 	log.Printf("开始传输")
 	response, err := client.SetConfigToCache(context.Background(), &xdsclient.Require{
 		ClusterName:     "example_proxy_cluster",
-		UpstreamHost:    "www.envoyproxy.io",
-		UpstreamPort:    80,
+		UpstreamHost:    "192.168.182.131",
+		UpstreamPort:    81,
 		RouteName:       "local_route",
 		Domains:         []string{"*"},
 		Prefix:          "/",

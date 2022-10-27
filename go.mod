@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/envoyproxy/go-control-plane v0.10.3
+	github.com/google/uuid v1.1.2
 	google.golang.org/grpc v1.50.1
 	google.golang.org/protobuf v1.28.1
 )

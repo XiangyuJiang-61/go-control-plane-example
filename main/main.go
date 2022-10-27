@@ -17,7 +17,7 @@ import (
 	"context"
 	"flag"
 	example "go-control-plane-test"
-	xdsserver "go-control-plane-test/xdsserver"
+	"go-control-plane-test/xdsserver"
 	"os"
 
 	"github.com/envoyproxy/go-control-plane/pkg/cache/v3"
@@ -80,10 +80,10 @@ func main() {
 	cb := &test.Callbacks{Debug: l.Debug}
 	// 这里是配置server，传入了缓存，初始上下文和调试相关配置
 	srv := server.NewServer(ctx, cache, cb)
+	// 开始准备后续的部分，通过一个gRPC去接收信息
+	go xdsserver.RunServer("8888", nodeID, cache)
+
 	// 调了server的方法起服务了
 	example.RunServer(ctx, srv, port)
-
-	// 开始准备后续的部分，通过一个gRPC去接收信息
-	xdsserver.RunServer("8888", nodeID, cache)
 
 }

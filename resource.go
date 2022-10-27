@@ -30,6 +30,7 @@ import (
 	"github.com/envoyproxy/go-control-plane/pkg/cache/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/resource/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/wellknown"
+	"github.com/google/uuid"
 )
 
 const (
@@ -197,8 +198,10 @@ func makeConfigSource(grpcClusterName string) *core.ConfigSource {
 
 // 生成Snapshot格式的信息，快照里面包含了所有我们配置过的xDS的信息
 func GenerateSnapshot(xDSRequest XDSRequest) *cache.Snapshot {
+	uuid := uuid.New()
 	// 这个结构体里面实际包括了所有我们配置了的xDS配置，这次是写入了CDS，RDS和LDS
-	snap, _ := cache.NewSnapshot("1",
+	// think: version 得每次不一样，要不用uuid试试
+	snap, _ := cache.NewSnapshot(uuid.String(),
 		map[resource.Type][]types.Resource{
 			resource.ClusterType:  {makeCluster(xDSRequest.ClusterName, xDSRequest.UpstreamHost, xDSRequest.UpstreamPort)},
 			resource.RouteType:    {makeRoute(xDSRequest.RouteName, xDSRequest.Domains, xDSRequest.Prefix, xDSRequest.ClusterName)},
